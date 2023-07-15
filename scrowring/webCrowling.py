@@ -8,17 +8,79 @@ import requests
 # query = input('검색할 키워드를 입력하세요: ')
 
 # step3. 입력받은 query가 포함된 url 주소(네이버 뉴스 검색 결과 페이지) 저장
-url = 'https://dmdrk1414.tistory.com/'+"49"
-print(url)
+
+firstPage = 435
+titleHtmlTag = 'h6'
+
+
+def getURL(num):
+    url = 'https://www.gwangju.go.kr/boardView.do?pageId=www788&boardId=BD_0000000022&seq=14' + \
+        str(num) + '&movePage=1'
+    return url
+
 # step4. requests 패키지를 이용해 'url'의 html 문서 가져오기
 
-response = requests.get(url)
-html_text = response.text
+
+def getHtmlText(urlNum):
+    response = requests.get(getURL(urlNum))
+    html_text = response.text
+    return html_text
+
 
 # step5. beautifulsoup 패키지로 파싱 후, 'soup' 변수에 저장
+# 제목얻기
+def getTitle(urlNum):
+    soup = bs(getHtmlText(urlNum), 'html.parser')
+    # title 태그 선택
+    titleTag = soup.select(titleHtmlTag)
 
-soup = bs(html_text, 'html.parser')
-soup = soup.find_all('span')
-# soup = soup.select('')
+    # 마지막 </h6> 태그 제거
+    titleStr = titleTag[0].text.strip('</h6>').strip()
 
-print(soup)
+    return titleStr
+
+# 작성자 얻기
+
+
+def getAuthor(urlNum):
+    soup = bs(getHtmlText(urlNum), 'html.parser')
+
+    authorSpan = soup.find('div', class_='board_view_info').find('span')
+    authorStr = authorSpan.text.split(' : ')[1].strip()
+
+    return authorStr
+
+# 날짜 얻기
+
+
+def getDate(urlNum):
+    soup = bs(getHtmlText(urlNum), 'html.parser')
+
+    dateSpan = soup.find('div', class_='board_view_info').findAll('span')
+    dateStr = dateSpan[1].text.split(' : ')[1].strip()
+
+    return dateStr
+
+# 내용 얻기
+
+
+def getContent(urlNum):
+    soup = bs(getHtmlText(urlNum), 'html.parser')
+
+    contentSpan = soup.find(class_='board_view_body')
+    contentStr = contentSpan.text.strip()
+
+    return contentStr
+
+
+def getArticle(urlNum):
+    title = getTitle(urlNum)
+    author = getAuthor(urlNum)
+    content = getContent(urlNum)
+    date = getDate(urlNum)
+
+    return (title, author, date, content)
+
+
+for firstPage in range(firstPage + 100):
+    print(getArticle(firstPage))

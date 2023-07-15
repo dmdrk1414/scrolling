@@ -2,14 +2,21 @@ from typing import Optional
 
 from fastapi import FastAPI
 from app.database.utill import createArticle, delete_article
-
+from scrowring.webCrowling import getArticle
 
 app = FastAPI()
 
+TITLE = 0
+AUTHOR = 1
+DATE = 2
+CONTENT = 3
+firstPage = 435
+
+def 
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return getArticle(firstPage)
 
 
 @app.get("/oldmanDisablesTable")
