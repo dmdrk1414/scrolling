@@ -1,7 +1,7 @@
 import pymysql
 
 
-def createArticle(database, title, author, date, content):
+async def createArticle(database, title, author, date, content):
     # db 연결
     db = pymysql.connect(host="localhost", user="root",
                          passwd="qkrtmdcks1!", charset="utf8")
@@ -16,6 +16,7 @@ def createArticle(database, title, author, date, content):
     sql = "INSERT INTO " + \
         str(database) + " (title, author, date, content) VALUES (%s, %s, %s, %s)"
     values = (title, author, date, content)
+    # values = ("title", "author", "date", "content")
     cursor.execute(sql, values)
 
     # 변경사항 커밋
