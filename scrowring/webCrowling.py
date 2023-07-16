@@ -79,8 +79,4 @@ def getArticle(urlNum):
     content = getContent(urlNum)
     date = getDate(urlNum)
 
-    return (title, author, date, content)
-
-
-for firstPage in range(firstPage + 100):
-    print(getArticle(firstPage))
+    return [title, author, date, content]
