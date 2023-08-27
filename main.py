@@ -5,7 +5,7 @@ from app.database.utill import createArticle, delete_article
 from scrowring.webCrowling import getArticle
 
 import time
-
+import json
 app = FastAPI()
 
 TITLE = 0
@@ -25,50 +25,89 @@ def read_root():
 
 @app.get("/oldmanDisablesTable")
 async def read_root():
+    tempList = []
+    id = 0
     for num in range(firstPage, firstPage + 30):
-        article = getArticle(num)  # 비동기 함수 호출
+        article = getArticle(num)
         title = article[TITLE]
         author = article[AUTHOR]
         date = article[DATE]
         content = article[CONTENT]
 
-        print(article)
+        print(title)
+        print(author)
+        print(date)
+        print(content)
 
+        tempList.append({
+            'id': id,
+            'title': title,
+            'author': author,
+            'date': date,
+            'content': content,
+            'isScrapCheck': False
+        })
+        id = id + 1
         # 비동기 함수 호출
-        await createArticle('oldmanDisablesTable', title, author, date, content)
+        # await createArticle(oldmanDisablesTable, title, author, date, content)
+    with open("oldmanDisablesTable.json", "w", encoding="utf-8") as json_file:
+        json.dump(tempList, json_file, ensure_ascii=False)
 
     return {"Hello": "World"}
 
 
 @app.get("/recipientsTable")
 async def read_root():
-    for num in range(firstPage + 30, firstPage + 60):
-        article = getArticle(num)  # 비동기 함수 호출
+    tempList = []
+    id = 0
+    for num in range(firstPage + 30, firstPage + 55):
+        article = getArticle(num)
         title = article[TITLE]
         author = article[AUTHOR]
         date = article[DATE]
         content = article[CONTENT]
 
-        print(article)
+        tempList.append({
+            'id': id,
+            'title': title,
+            'author': author,
+            'date': date,
+            'content': content,
+            'isScrapCheck': False
+        })
+        id = id + 1
 
         # 비동기 함수 호출
-        await createArticle(recipientsTable, title, author, date, content)
+        # await createArticle(recipientsTable, title, author, date, content)
+    with open("recipientsTable.json", "w", encoding="utf-8") as json_file:
+        json.dump(tempList, json_file, ensure_ascii=False)
     return {"Hello": "World"}
 
 
 @app.get("/pregnantsTable")
 async def read_root():
-    for num in range(firstPage + 60, firstPage + 30):
-        article = getArticle(num)  # 비동기 함수 호출
+    tempList = []
+    id = 0
+    for num in range(firstPage + 60, firstPage + 90):
+        article = getArticle(num)
         title = article[TITLE]
         author = article[AUTHOR]
         date = article[DATE]
         content = article[CONTENT]
 
-        print(article)
-
+        tempList.append({
+            'id': id,
+            'title': title,
+            'author': author,
+            'date': date,
+            'content': content,
+            'isScrapCheck': False
+        })
+        id = id + 1
         # 비동기 함수 호출
-        await createArticle(pregnantsTable, title, author, date, content)
+        # await createArticle('pregnantsTable', title, author, date, content)
+    with open("pregnantsTable.json", "w", encoding="utf-8") as json_file:
+        json.dump(tempList, json_file, ensure_ascii=False)
     return {"Hello": "World"}
 
 

@@ -217,14 +217,17 @@ cd /opt/homebrew/opt/mysql@8.0/bin
 ```sql
 SELECT * FROM oldmanDisablesTable;
 ALTER TABLE oldmanDisablesTable AUTO_INCREMENT = 1;
+DELETE FROM oldmanDisablesTable;
 http://localhost:8000/oldmanDisablesTable
 
 SELECT * FROM recipientsTable;
 ALTER TABLE recipientsTable AUTO_INCREMENT = 1;
+DELETE FROM recipientsTable;
 http://localhost:8000/recipientsTable
 
 SELECT * FROM pregnantsTable;
 ALTER TABLE pregnantsTable AUTO_INCREMENT = 1;
+DELETE FROM pregnantsTable;
 http://localhost:8000/pregnantsTable
 ```
 
