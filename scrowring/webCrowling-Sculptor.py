@@ -20,6 +20,7 @@ def getURL():
     url = f'http://royalroadweed.blogspot.com/2014/11/volume-{volumeNum}-chapter-{chapterNum}.html'
     return url
 
+
 # step4. requests 패키지를 이용해 'url'의 html 문서 가져오기
 
 
