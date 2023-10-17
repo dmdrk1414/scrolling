@@ -28,7 +28,6 @@ def getURL():
 def getHtmlText():
     response = requests.get(getURL())
     html_text = response.text
-
     return html_text
 
 
